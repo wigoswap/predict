@@ -88,7 +88,13 @@ contract Predict is Ownable, Pausable, ReentrancyGuard {
         uint256 indexed epoch,
         uint256 amount
     );
-    event Claim(address indexed sender, uint256 indexed epoch, uint256 amount);
+    event Claim(
+        address indexed sender,
+        uint256 indexed epoch,
+        uint256 amount,
+        uint256 refAmount,
+        uint256 treasuryAmount
+    );
     event EndRound(
         uint256 indexed epoch,
         uint256 indexed roundId,
@@ -363,7 +369,13 @@ contract Predict is Ownable, Pausable, ReentrancyGuard {
             refReward += addedRefReward;
             treasuryAmount += treasuryAmt;
 
-            emit Claim(msg.sender, epochs[i], addedUserReward);
+            emit Claim(
+                msg.sender,
+                epochs[i],
+                addedUserReward,
+                addedRefReward,
+                treasuryAmt
+            );
         }
 
         if (userReward > 0) {
